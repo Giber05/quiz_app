@@ -32,8 +32,8 @@ import '../../modules/authentication/presentation/screens/register_user/bloc/reg
     as _i18;
 import '../../modules/authentication/presentation/screens/splash/cubit/splash_cubit.dart'
     as _i20;
-import '../architecutre/cubits/messenger/messenger_cubit.dart' as _i8;
-import '../architecutre/cubits/session/session_bloc.dart' as _i19;
+import '../architecutre/blocs/messenger/messenger_cubit.dart' as _i8;
+import '../architecutre/blocs/session/session_bloc.dart' as _i19;
 import '../client/api_client.dart' as _i3;
 import '../client/auth_client_impl.dart' as _i5;
 import '../client/cb_client_impl.dart' as _i4;
