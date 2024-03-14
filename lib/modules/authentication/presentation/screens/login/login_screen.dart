@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/cubits/session/session_event.dart';
 import 'package:com_bahaso_gilang_liberty/modules/authentication/presentation/screens/login/bloc/login_bloc.dart';
 import 'package:com_bahaso_gilang_liberty/modules/authentication/presentation/screens/login/bloc/login_event.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class LoginScreen extends StatelessWidget {
           child: BlocListener<LoginBloc, LoginState>(
             listener: (context, state) async {
               if (state is LoginSuccess) {
-                context.read<SessionCubit>().setCurrentUser(state.session);
+                context.read<SessionBloc>().add(SetCurrentUserEvent(state.session));
                 context.router.push(const HomeRoute());
               }
             },

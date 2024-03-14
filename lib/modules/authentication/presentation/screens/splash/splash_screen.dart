@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/cubits/session/session_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/cubits/session/session_cubit.dart';
@@ -19,7 +20,7 @@ class SplashScreen extends StatelessWidget {
         body: BlocListener<SplashCubit, SplashState>(
           listener: (context, state) {
             if (state is SplashSuccess) {
-              context.read<SessionCubit>().setCurrentUser(state.userSession);
+              context.read<SessionBloc>().add(SetCurrentUserEvent(state.userSession));
               final route = state.userSession != null ? const HomeRoute() : const LoginRoute();
               context.router.replace(route);
             }

@@ -83,8 +83,8 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i17.RegisterUser(gh<_i11.AuthenticationRepo>()));
     gh.factory<_i18.RegisterUserBloc>(
         () => _i18.RegisterUserBloc(gh<_i17.RegisterUser>()));
-    gh.lazySingleton<_i19.SessionCubit>(
-        () => _i19.SessionCubit(gh<_i16.Logout>()));
+    gh.lazySingleton<_i19.SessionBloc>(
+        () => _i19.SessionBloc(gh<_i16.Logout>()));
     gh.factory<_i20.SplashCubit>(
         () => _i20.SplashCubit(gh<_i13.GetCurrentSession>()));
     return this;

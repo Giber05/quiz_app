@@ -22,7 +22,7 @@ class CBProfielderApp extends StatelessWidget {
           create: (context) => getIt<MessengerCubit>(),
         ),
         BlocProvider(
-          create: (context) => getIt<SessionCubit>(),
+          create: (context) => getIt<SessionBloc>(),
         ),
       ],
       child: Sizer(builder: (context, _, __) {

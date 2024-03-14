@@ -10,7 +10,7 @@ class AuthenticatedWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SessionCubit, SessionState>(
+    return BlocListener<SessionBloc, SessionState>(
       listener: (context, state) {
         print(state);
         if (state is SessionLogout) {
