@@ -7,6 +7,7 @@ class _QuestionItem extends StatelessWidget {
   final int currentQuestionIndex;
   final int totalQuestions;
   final VoidCallback onNext;
+  final ValueListenable<int> wrongAttemps;
 
   _QuestionItem({
     Key? key,
@@ -15,9 +16,11 @@ class _QuestionItem extends StatelessWidget {
     required this.currentQuestionIndex,
     required this.totalQuestions,
     required this.onNext,
+    required this.wrongAttemps,
   }) : super(key: key);
 
   final AudioPlayer audioPlayer = AudioPlayer();
+  ValueNotifier<bool> questionAnswered = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
@@ -59,17 +62,34 @@ class _QuestionItem extends StatelessWidget {
               );
             }
           }).toList(),
-          // ignore: prefer_const_constructors
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           if (question.typeQuestion == 'multichoice')
-            ...question.data.map((option) => Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: ElevatedButton(
-                    onPressed: () => answerQuestion(option.value!),
-                    child: Text(option.text!),
-                  ),
-                )),
+            ...question.data.map((option) => ValueListenableBuilder(
+                valueListenable: wrongAttemps,
+                builder: (context, attemps, _) {
+                  return Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        answerQuestion(option.value!);
+                      },
+                      child: Row(
+                        children: [
+                          Text(option.text!),
+                          8.horizontalSpace,
+                          if (attemps >= 3)
+                            question.data.firstWhere((option) => option.value == question.value).value == option.value!
+                                ? const Icon(
+                                    Icons.check,
+                                    color: Colors.green,
+                                  )
+                                : const Icon(Icons.close, color: Colors.red)
+                        ],
+                      ),
+                    ),
+                  );
+                })),
           if (question.typeQuestion == 'description')
             CBElevatedButton(
               label: 'Next',
