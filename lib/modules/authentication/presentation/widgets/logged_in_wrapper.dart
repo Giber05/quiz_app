@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/cubits/session/session_cubit.dart';
+import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/blocs/session/session_bloc.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/routing/router.gr.dart';
 
 class AuthenticatedWrapper extends StatelessWidget {

@@ -1,4 +1,4 @@
-part of 'session_cubit.dart';
+part of 'session_bloc.dart';
 
 abstract class SessionState extends Equatable {
   final UserSession? session;

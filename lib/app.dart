@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/cubits/messenger/messenger_cubit.dart';
-import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/cubits/session/session_cubit.dart';
+import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/blocs/messenger/messenger_cubit.dart';
+import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/blocs/session/session_bloc.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/error_handler/global_errror_catcher.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/ext/ctx_ext.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/routing/router.dart';

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/cubits/session/session_event.dart';
+import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/blocs/session/session_event.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/model/user_session.dart';
