@@ -1,12 +1,11 @@
-
 import 'package:equatable/equatable.dart';
 
-class QuizData extends Equatable {
+class QuizDataModel extends Equatable {
   final String? text;
   final String? name;
   final String? value;
 
-  QuizData({
+  QuizDataModel({
     this.text,
     this.name,
     this.value,

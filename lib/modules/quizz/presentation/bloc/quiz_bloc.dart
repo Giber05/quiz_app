@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/types/resource.dart';
 import 'package:com_bahaso_gilang_liberty/modules/quizz/domain/models/quiz_model.dart';
+import 'package:com_bahaso_gilang_liberty/modules/quizz/domain/usecases/cached_quizzes.dart';
+import 'package:com_bahaso_gilang_liberty/modules/quizz/domain/usecases/get_cached_quizzes.dart';
 import 'package:com_bahaso_gilang_liberty/modules/quizz/domain/usecases/get_quiz_data.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
@@ -11,7 +13,10 @@ part 'quiz_state.dart';
 @injectable
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final GetQuizData _getQuizData;
-  QuizBloc(this._getQuizData) : super(QuizInitial()) {
+  final GetCachedQuizzes _getCachedQuizzes;
+  final CachedQuizzes _cachedQuizzes;
+  QuizBloc(this._getQuizData, this._getCachedQuizzes, this._cachedQuizzes) : super(QuizInitial()) {
+    on<CachedQuizzesEvent>(_onCachedQuizData);
     on<GetQuizEvent>(_onGetQuizData);
   }
 
@@ -25,6 +30,21 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       case Error():
         emit(GetQuizFailed(result.exception.message));
       default:
+    }
+  }
+
+  Future<void> _onCachedQuizData(CachedQuizzesEvent event, Emitter<QuizState> emit) async {
+    final currentState = state;
+    if (currentState is GetQuizSuccess) {
+      final result = await _cachedQuizzes(CachedQuizzesParams(key: 'quizzes', quizzes: currentState.quizData));
+
+      switch (result) {
+        case Success(data: List<QuizModel> quizData):
+          emit(GetQuizSuccess(quizData));
+        case Error():
+          emit(GetQuizFailed(result.exception.message));
+        default:
+      }
     }
   }
 }

@@ -46,7 +46,6 @@ class QuizScreen extends StatelessWidget {
                     ConfirmationDialog.launch(
                       context,
                       title: 'Are You Sure Want to Logout?',
-                      
                       onConfirm: (VoidCallback closeDialog) {
                         context.logout();
                         closeDialog();
@@ -89,7 +88,12 @@ class _QuizContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<QuizBloc, QuizState>(
+    return BlocConsumer<QuizBloc, QuizState>(
+      listener: (context, state) {
+        if (state is GetQuizSuccess) {
+          context.read<QuizBloc>().add(CachedQuizzesEvent(state.quizData));
+        }
+      },
       builder: (context, state) {
         if (state is GetQuizLoading) {
           return const Center(child: CBCircularLoading());

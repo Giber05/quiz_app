@@ -7,4 +7,10 @@ sealed class QuizEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetQuizEvent extends QuizEvent{}
+class GetQuizEvent extends QuizEvent {}
+
+class CachedQuizzesEvent extends QuizEvent {
+  final List<QuizModel> quizzes;
+
+  const CachedQuizzesEvent(this.quizzes);
+}

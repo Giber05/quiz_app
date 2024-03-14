@@ -7,7 +7,7 @@ class QuizRemoteMapper implements FromJSONMapper<QuizModel> {
   final quizDataMapper = QuizDataMapper();
   @override
   QuizModel toModel(json) {
-    final List<QuizData> quizData = (json['data'] as List<dynamic>).map((e) => quizDataMapper.toModel(e)).toList();
+    final List<QuizDataModel> quizData = (json['data'] as List<dynamic>).map((e) => quizDataMapper.toModel(e)).toList();
     return QuizModel(
       question: json['question'],
       questionNumber: json['questionnumber'].toString(),

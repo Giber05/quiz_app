@@ -8,7 +8,7 @@ class QuizModel extends Equatable {
   final String name;
   final String value;
   final int grade;
-  final List<QuizData> data;
+  final List<QuizDataModel> data;
 
   QuizModel({
     required this.question,
