@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/ext/ctx_ext.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/widgets/buttons/base_button.dart';
-import 'package:com_bahaso_gilang_liberty/infrastructure/widgets/hide_widget.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/widgets/buttons/button_icon_type.dart';
 
 class CBOutlinedButton extends StatelessWidget {

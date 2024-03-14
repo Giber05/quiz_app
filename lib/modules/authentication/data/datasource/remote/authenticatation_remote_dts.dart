@@ -13,22 +13,20 @@ abstract class AuthenticationRemoteDTS {
 
 @Injectable(as: AuthenticationRemoteDTS)
 class AuthenticationRemoteDTSImpl implements AuthenticationRemoteDTS {
-  final APIClient _cbClient;
+  final APIClient authClient;
 
-  AuthenticationRemoteDTSImpl(this._cbClient);
+  AuthenticationRemoteDTSImpl(@Named('AuthClient') this.authClient);
 
   @override
-  Future<APIResult<UserSession>> login({required String email, required String password}) => _cbClient.post(
-      path: 'https://reqres.in/api/login',
+  Future<APIResult<UserSession>> login({required String email, required String password}) => authClient.post(
+      path: '/login',
       shouldPrint: true,
-      useBaseUrl: false,
       body: LoginRemoteReqMapper((password: password, email: email)).toJSON(),
       mapper: (json) => UserSessionRemoteResMapper().toModel(json));
 
   @override
-  Future<APIResult<Nothing>> logout() => _cbClient.post(
-        path: 'https://reqres.in/api/logout',
-        useBaseUrl: false,
+  Future<APIResult<Nothing>> logout() => authClient.post(
+        path: '/logout',
         shouldPrint: true,
         mapper: (json) => const Nothing(),
       );

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/cubits/session/session_cubit.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/routing/router.gr.dart';
-import 'package:com_bahaso_gilang_liberty/infrastructure/service_locator/service_locator.dart';
-import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/usecases/logout.dart';
 
 class AuthenticatedWrapper extends StatelessWidget {
   final Widget child;

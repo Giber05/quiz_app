@@ -8,25 +8,63 @@ import 'package:com_bahaso_gilang_liberty/infrastructure/types/exceptions/form_e
 import 'package:com_bahaso_gilang_liberty/infrastructure/types/exceptions/session_exception.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/types/json.dart';
 import 'package:flutter/foundation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
-@Named("CBClient")
+@Named("AuthClient")
 @LazySingleton(as: APIClient)
-class CBClient implements APIClient {
+class AuthClient implements APIClient {
+  @override
+  String get baseURL => NetworkConstants.apiAuthUrl;
+
+  @override
+  String buildFullUrl(
+    String extraPath,
+  ) =>
+      "$baseURL$extraPath";
+
+  @override
+  Future<APIResult<T>> delete<T>(
+      {required String path,
+      required MapFromJSON<T> mapper,
+      Map<String, String>? headers,
+      body,
+      String? token,
+      Map<String, dynamic>? query,
+      bool shouldPrint = false,
+      bool useBaseUrl = true,
+      MockedResult? mockResult}) {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<APIResult<T>> get<T>(
+      {required String path,
+      Map<String, String>? headers,
+      required MapFromJSON<T> mapper,
+      Map<String, dynamic>? query,
+      bool shouldPrint = false,
+      String? token,
+      bool useBaseUrl = true,
+      MockedResult? mockResult}) {
+    // TODO: implement get
+    throw UnimplementedError();
+  }
+
   @override
   Future<APIResult<T>> post<T>(
       {required String path,
       required MapFromJSON<T> mapper,
       Map<String, String>? headers,
-      JSON? body,
-      Map<String, dynamic>? query,
+      body,
       String? token,
+      Map<String, dynamic>? query,
       bool shouldPrint = false,
+      bool useBaseUrl = true,
       MockedResult? mockResult}) async {
     try {
-      final uri =
-          Uri.parse(buildFullUrl(path)).replace(queryParameters: _buildQuery(query, token));
+      final uri = Uri.parse(buildFullUrl(path)).replace(queryParameters: _buildQuery(query, token));
       final finalHeader = _buildHeader(headers);
       final response = mockResult != null
           ? _mockResult(mockResult)
@@ -44,85 +82,18 @@ class CBClient implements APIClient {
   }
 
   @override
-  Future<APIResult<T>> get<T>({
-    required String path,
-    Map<String, String>? headers,
-    required MapFromJSON<T> mapper,
-    MockedResult? mockResult,
-    Map<String, dynamic>? query,
-    String? token,
-    bool shouldPrint = false,
-  }) async {
-    final uri =
-        Uri.parse(buildFullUrl(path)).replace(queryParameters: _buildQuery(query, token));
-    final finalHeader = _buildHeader(headers);
-    final response = mockResult != null
-        ? _mockResult(mockResult)
-        : await http.get(
-            uri,
-            headers: finalHeader,
-          );
-    return _handleResponse(response, mapper, shouldPrint, path, headers: finalHeader, query: query, token: token);
-  }
-
-  @override
-  Future<APIResult<T>> delete<T>({
-    required String path,
-    required MapFromJSON<T> mapper,
-    Map<String, String>? headers,
-    body,
-    String? token,
-    query,
-    bool shouldPrint = false,
-    MockedResult? mockResult,
-  }) async {
-    try {
-      final uri =
-          Uri.parse(buildFullUrl(path)).replace(queryParameters: _buildQuery(query, token));
-      final finalHeader = _buildHeader(headers);
-      final response = mockResult != null
-          ? _mockResult(mockResult)
-          : await http.delete(
-              uri,
-              headers: finalHeader,
-              body: jsonEncode(body),
-            );
-      final result = _handleResponse(response, mapper, shouldPrint, path,
-          headers: finalHeader, body: body, query: query, token: token);
-      return result;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<APIResult<T>> put<T>({
-    required String path,
-    required MapFromJSON<T> mapper,
-    Map<String, String>? headers,
-    body,
-    String? token,
-    query,
-    bool shouldPrint = false,
-    MockedResult? mockResult,
-  }) async {
-    try {
-      final uri =
-          Uri.parse(buildFullUrl(path)).replace(queryParameters: _buildQuery(query, token));
-      final finalHeader = _buildHeader(headers);
-      final response = mockResult != null
-          ? _mockResult(mockResult)
-          : await http.put(
-              uri,
-              headers: finalHeader,
-              body: jsonEncode(body),
-            );
-      final result = _handleResponse(response, mapper, shouldPrint, path,
-          headers: finalHeader, body: body, query: query, token: token);
-      return result;
-    } catch (e) {
-      rethrow;
-    }
+  Future<APIResult<T>> put<T>(
+      {required String path,
+      required MapFromJSON<T> mapper,
+      Map<String, String>? headers,
+      body,
+      String? token,
+      Map<String, dynamic>? query,
+      bool useBaseUrl = true,
+      bool shouldPrint = false,
+      MockedResult? mockResult}) {
+    // TODO: implement put
+    throw UnimplementedError();
   }
 
   Map<String, String> _buildHeader(Map<String, dynamic>? headers) {
@@ -146,14 +117,14 @@ class CBClient implements APIClient {
     final result = jsonDecode(response.body) as Map<String, dynamic>;
     if (response.statusCode >= 200 && response.statusCode <= 299) {
       final mappedData = mapper(result);
-      return APIResult<T>(status: result['status'], data: mappedData, message: result['message'], code: result['code']);
+      return APIResult<T>(status: "OK", data: mappedData, message: "", code: response.statusCode);
     }
     if (response.statusCode == 401) {
-      throw SessionException(result['message']);
+      throw const SessionException("UnAuthorized");
     }
     final resultBody = jsonDecode(response.body);
-    if (resultBody is Map<String, dynamic> && resultBody.containsKey("status")) {
-      final message = resultBody.getOrNull("message");
+    if (resultBody is Map<String, dynamic>) {
+      final message = resultBody.getOrNull("error");
       if (message != null) throw BaseException(message);
       final title = resultBody.getOrNull("title");
       if (title != null) {
@@ -225,10 +196,4 @@ class CBClient implements APIClient {
   http.Response _mockResult(MockedResult mockedResult) {
     return http.Response(jsonEncode(mockedResult.result), mockedResult.statusCode, headers: mockedResult.headers);
   }
-
-  @override
-  String get baseURL => NetworkConstants.apiBaseUrl;
-
-  @override
-  String buildFullUrl(String extraPath, ) =>  "$baseURL$extraPath";
 }

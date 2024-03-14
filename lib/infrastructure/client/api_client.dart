@@ -1,13 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'package:injectable/injectable.dart';
-import 'package:com_bahaso_gilang_liberty/infrastructure/env/network_constants.dart';
-import 'package:com_bahaso_gilang_liberty/infrastructure/ext/map_ext.dart';
-import 'package:com_bahaso_gilang_liberty/infrastructure/types/exceptions/base_exception.dart';
-import 'package:com_bahaso_gilang_liberty/infrastructure/types/exceptions/form_exception.dart';
-import 'package:com_bahaso_gilang_liberty/infrastructure/types/exceptions/session_exception.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/types/json.dart';
 
 class APIResult<T> {
@@ -36,7 +26,7 @@ abstract class APIClient {
 
   const APIClient(this.baseURL);
 
-  String buildFullUrl(String extraPath, {bool useBaseUrl = true});
+  String buildFullUrl(String extraPath);
 
   Future<APIResult<T>> post<T>(
       {required String path,
@@ -46,7 +36,6 @@ abstract class APIClient {
       String? token,
       Map<String, dynamic>? query,
       bool shouldPrint = false,
-      bool useBaseUrl = true,
       MockedResult? mockResult});
 
   Future<APIResult<T>> get<T>(
@@ -56,7 +45,6 @@ abstract class APIClient {
       Map<String, dynamic>? query,
       bool shouldPrint = false,
       String? token,
-      bool useBaseUrl = true,
       MockedResult? mockResult});
 
   Future<APIResult<T>> delete<T>(
@@ -67,7 +55,6 @@ abstract class APIClient {
       String? token,
       Map<String, dynamic>? query,
       bool shouldPrint = false,
-      bool useBaseUrl = true,
       MockedResult? mockResult});
 
   Future<APIResult<T>> put<T>(
@@ -77,7 +64,6 @@ abstract class APIClient {
       JSON? body,
       String? token,
       Map<String, dynamic>? query,
-      bool useBaseUrl = true,
       bool shouldPrint = false,
       MockedResult? mockResult});
 }

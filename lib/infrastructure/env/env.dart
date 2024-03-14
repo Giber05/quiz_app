@@ -1,10 +1,11 @@
 enum ENV {
-  dev(baseURL: "https://devbe.bahaso.com/api/v2"),
-  prod(baseURL: "https://devbe.bahaso.com/api/v2");
+  dev(baseURL: "https://devbe.bahaso.com", authURL: "https://reqres.in"),
+  prod(baseURL: "https://devbe.bahaso.com", authURL: "https://reqres.in");
 
   final String baseURL;
+  final String authURL;
 
-  const ENV({required this.baseURL});
+  const ENV({required this.baseURL, required this.authURL});
 
   static ENV current = ENV.dev;
 
