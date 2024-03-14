@@ -1,6 +1,8 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/ext/double_ext.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/gen/assets.gen.dart';
+import 'package:com_bahaso_gilang_liberty/infrastructure/routing/router.gr.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/widgets/buttons/outlined_button.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/widgets/layouts/dialog/dialog_container.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/widgets/loading/circular.dart';
@@ -86,7 +88,9 @@ class _HomeScreenContent extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: CBElevatedButton(
                       label: "Get Started",
-                      onPressed: () {},
+                      onPressed: () {
+                        context.router.push(const QuizRoute());
+                      },
                       fillParent: false,
                       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                     ),
