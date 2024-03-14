@@ -28,6 +28,7 @@ class AuthenticationRemoteDTSImpl implements AuthenticationRemoteDTS {
   Future<APIResult<Nothing>> logout() => authClient.post(
         path: '/logout',
         shouldPrint: true,
+        body: {},
         mapper: (json) => const Nothing(),
       );
 }

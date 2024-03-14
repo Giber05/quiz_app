@@ -22,5 +22,8 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
   Future<UserSession?> getLastLoggedInUser() => _authLocalDTS.getLastSession();
 
   @override
-  Future<void> logout() => _authLocalDTS.clearSession();
+  Future<void> logout() async {
+    _authenticationRemoteDTS.logout();
+    return _authLocalDTS.clearSession();
+  }
 }
