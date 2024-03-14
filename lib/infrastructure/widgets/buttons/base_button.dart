@@ -29,14 +29,22 @@ class CBButtonContent extends StatelessWidget {
       mainAxisAlignment: buttonIconType.mainAxisAlignment,
       children: [
         if (prefixIcon != null) prefixIcon!,
-        if (keepBalance && prefixIcon == null && suffixIcon != null) CBHideWidget(child: suffixIcon!),
+        if (keepBalance && prefixIcon == null && suffixIcon != null)
+          CBHideWidget(
+            child: suffixIcon!,
+            visible: false,
+          ),
         Text(
           label,
           style: textStyle,
           textAlign: TextAlign.center,
         ),
         if (suffixIcon != null) suffixIcon!,
-        if (keepBalance && suffixIcon == null && prefixIcon != null) CBHideWidget(child: prefixIcon!)
+        if (keepBalance && suffixIcon == null && prefixIcon != null)
+          CBHideWidget(
+            child: prefixIcon!,
+            visible: false,
+          )
       ],
     );
   }

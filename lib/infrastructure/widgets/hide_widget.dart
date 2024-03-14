@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class CBHideWidget extends StatelessWidget {
   final Widget child;
-  const CBHideWidget({super.key, required this.child});
+  final bool visible;
+  const CBHideWidget({super.key, required this.child, required this.visible});
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(maintainAnimation: true, maintainSize: true, visible: false, maintainState: true, child: child);
+    return Visibility(maintainAnimation: true, maintainSize: true, visible: visible, maintainState: true, child: child);
   }
 }
