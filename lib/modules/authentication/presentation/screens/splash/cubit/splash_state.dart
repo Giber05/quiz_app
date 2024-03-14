@@ -10,7 +10,7 @@ abstract class SplashState extends Equatable {
 class SplashInitial extends SplashState {}
 
 class SplashSuccess extends SplashState {
-  final UserSession? userSession;
+  final UserSessionModel? userSession;
 
   const SplashSuccess(this.userSession);
 }

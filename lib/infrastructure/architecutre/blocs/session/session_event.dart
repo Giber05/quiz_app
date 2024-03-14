@@ -1,15 +1,15 @@
 import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/model/user_session.dart';
 
-abstract class SessionEvent {}
+sealed class SessionEvent {}
 
 class SetCurrentUserEvent extends SessionEvent {
-  final UserSession? user;
+  final UserSessionModel? user;
 
   SetCurrentUserEvent(this.user);
 }
 
 class LogoutEvent extends SessionEvent {
-  final UserSession? user;
+  final UserSessionModel? user;
 
   LogoutEvent(this.user);
 }

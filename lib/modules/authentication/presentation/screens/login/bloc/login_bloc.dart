@@ -8,6 +8,7 @@ import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/model/us
 import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/usecases/login.dart';
 
 part 'login_state.dart';
+
 @injectable
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final Login _login;
@@ -24,10 +25,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     await Future.delayed(const Duration(seconds: 1)); // Simulate a delay
     final result = await _login(LoginParams(email: event.email, password: event.password));
     switch (result) {
-      case Success(data: UserSession data):
+      case Success(data: UserSessionModel data):
         emit(LoginSuccess(data));
       case Error():
-        emit(LoginError( result.exception.message));
+        emit(LoginError(result.exception.message));
     }
   }
 
@@ -37,5 +38,4 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     password.dispose();
     return super.close();
   }
-
 }

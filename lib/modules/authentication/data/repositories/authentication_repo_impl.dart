@@ -12,14 +12,14 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
   AuthenticationRepoImpl(this._authenticationRemoteDTS, this._authLocalDTS);
 
   @override
-  Future<UserSession> login({required String email, required String password}) async {
+  Future<UserSessionModel> login({required String email, required String password}) async {
     final loginResult = await _authenticationRemoteDTS.login(email: email, password: password);
     await _authLocalDTS.putSession(loginResult.data);
     return loginResult.data;
   }
 
   @override
-  Future<UserSession?> getLastLoggedInUser() => _authLocalDTS.getLastSession();
+  Future<UserSessionModel?> getLastLoggedInUser() => _authLocalDTS.getLastSession();
 
   @override
   Future<void> logout() async {
@@ -28,7 +28,7 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
   }
 
   @override
-  Future<UserSession> registerUser({required String email, required String password}) async {
+  Future<UserSessionModel> registerUser({required String email, required String password}) async {
     final registerResult = await _authenticationRemoteDTS.registerUser(email: email, password: password);
     await _authLocalDTS.putSession(registerResult.data);
     return registerResult.data;

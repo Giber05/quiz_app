@@ -15,7 +15,7 @@ class RegisterUserBloc extends Bloc<RegisterUserEvent, RegisterUserState> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final GlobalKey formKey = GlobalKey();
-  
+
   RegisterUserBloc(this._registerUser) : super(RegisterUserInitial()) {
     on<RegisterUserRequested>(_onRegisterUserRequested);
   }
@@ -24,9 +24,9 @@ class RegisterUserBloc extends Bloc<RegisterUserEvent, RegisterUserState> {
     emit(RegisterUserLoading());
     await Future.delayed(const Duration(seconds: 1)); // Simulate a delay
     final result = await _registerUser(RegisterParams(email: event.email, password: event.password));
-     switch (result) {
-      case Success(data: UserSession data):
-        emit(RegisterUserSuccess(session:data));
+    switch (result) {
+      case Success(data: UserSessionModel data):
+        emit(RegisterUserSuccess(session: data));
       case Error():
         emit(RegisterUserFailed(message: result.exception.message));
     }
@@ -39,4 +39,3 @@ class RegisterUserBloc extends Bloc<RegisterUserEvent, RegisterUserState> {
     return super.close();
   }
 }
-

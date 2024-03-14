@@ -4,9 +4,9 @@ import 'package:com_bahaso_gilang_liberty/modules/authentication/data/mapper/loc
 import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/model/user_session.dart';
 
 abstract class AuthenticationLocalDTS {
-  Future<void> putSession(UserSession session);
+  Future<void> putSession(UserSessionModel session);
   Future<void> clearSession();
-  Future<UserSession?> getLastSession();
+  Future<UserSessionModel?> getLastSession();
 }
 
 @Injectable(as: AuthenticationLocalDTS)
@@ -20,12 +20,13 @@ class AuthLocalDTSImpl implements AuthenticationLocalDTS {
   AuthLocalDTSImpl(this._secureStorage);
 
   @override
-  Future<void> putSession(UserSession session) =>
+  Future<void> putSession(UserSessionModel session) =>
       _secureStorage.writeJSON(key: _userSessionKey, json: _sessionLocalMapper.toEntity(session));
 
   @override
   Future<void> clearSession() => _secureStorage.remove(_userSessionKey);
 
   @override
-  Future<UserSession?> getLastSession() => _secureStorage.readData(_sessionLocalMapper.toDomain, key: _userSessionKey);
+  Future<UserSessionModel?> getLastSession() =>
+      _secureStorage.readData(_sessionLocalMapper.toDomain, key: _userSessionKey);
 }

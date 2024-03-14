@@ -12,12 +12,12 @@ class LoginParams {
 }
 
 @injectable
-class Login extends Usecase<LoginParams, UserSession> {
+class Login extends Usecase<LoginParams, UserSessionModel> {
   final AuthenticationRepo _authenticationRepo;
 
   Login(this._authenticationRepo);
 
   @override
-  Future<Resource<UserSession>> execute(LoginParams params) =>
+  Future<Resource<UserSessionModel>> execute(LoginParams params) =>
       _authenticationRepo.login(email: params.email, password: params.password).asResource;
 }

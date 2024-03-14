@@ -12,11 +12,11 @@ final class RegisterUserInitial extends RegisterUserState {}
 final class RegisterUserLoading extends RegisterUserState {}
 
 final class RegisterUserSuccess extends RegisterUserState {
-    final UserSession session;
-
+  final UserSessionModel session;
 
   const RegisterUserSuccess({required this.session});
 }
+
 final class RegisterUserFailed extends RegisterUserState {
   final String message;
 

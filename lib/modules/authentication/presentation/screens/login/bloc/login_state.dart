@@ -12,7 +12,7 @@ class LoginInIdle extends LoginState {}
 class LoginLoading extends LoginState {}
 
 class LoginSuccess extends LoginState {
-  final UserSession session;
+  final UserSessionModel session;
 
   const LoginSuccess(this.session);
 }

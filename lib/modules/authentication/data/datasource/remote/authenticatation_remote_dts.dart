@@ -6,8 +6,8 @@ import 'package:com_bahaso_gilang_liberty/modules/authentication/data/mapper/rem
 import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/model/user_session.dart';
 
 abstract class AuthenticationRemoteDTS {
-  Future<APIResult<UserSession>> login({required String email, required String password});
-  Future<APIResult<UserSession>> registerUser({required String email, required String password});
+  Future<APIResult<UserSessionModel>> login({required String email, required String password});
+  Future<APIResult<UserSessionModel>> registerUser({required String email, required String password});
 
   Future<APIResult<Nothing>> logout();
 }
@@ -19,7 +19,7 @@ class AuthenticationRemoteDTSImpl implements AuthenticationRemoteDTS {
   AuthenticationRemoteDTSImpl(@Named('AuthClient') this.authClient);
 
   @override
-  Future<APIResult<UserSession>> login({required String email, required String password}) => authClient.post(
+  Future<APIResult<UserSessionModel>> login({required String email, required String password}) => authClient.post(
       path: '/login',
       shouldPrint: true,
       body: AuthRemoteReqMapper((password: password, email: email)).toJSON(),
@@ -34,9 +34,10 @@ class AuthenticationRemoteDTSImpl implements AuthenticationRemoteDTS {
       );
 
   @override
-  Future<APIResult<UserSession>> registerUser({required String email, required String password}) => authClient.post(
-      path: '/register',
-      shouldPrint: true,
-      body: AuthRemoteReqMapper((password: password, email: email)).toJSON(),
-      mapper: (json) => UserSessionRemoteResMapper().toModel(json));
+  Future<APIResult<UserSessionModel>> registerUser({required String email, required String password}) =>
+      authClient.post(
+          path: '/register',
+          shouldPrint: true,
+          body: AuthRemoteReqMapper((password: password, email: email)).toJSON(),
+          mapper: (json) => UserSessionRemoteResMapper().toModel(json));
 }

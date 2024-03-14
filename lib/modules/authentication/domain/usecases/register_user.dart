@@ -12,12 +12,12 @@ class RegisterParams {
 }
 
 @injectable
-class RegisterUser extends Usecase<RegisterParams, UserSession> {
+class RegisterUser extends Usecase<RegisterParams, UserSessionModel> {
   final AuthenticationRepo _authenticationRepo;
 
   RegisterUser(this._authenticationRepo);
 
   @override
-  Future<Resource<UserSession>> execute(RegisterParams params) =>
+  Future<Resource<UserSessionModel>> execute(RegisterParams params) =>
       _authenticationRepo.registerUser(email: params.email, password: params.password).asResource;
 }

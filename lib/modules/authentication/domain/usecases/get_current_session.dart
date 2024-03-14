@@ -5,11 +5,11 @@ import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/model/us
 import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/repositories/authentication_repo.dart';
 
 @injectable
-class GetCurrentSession extends UsecaseNoParams<UserSession?> {
+class GetCurrentSession extends UsecaseNoParams<UserSessionModel?> {
   final AuthenticationRepo _authenticationRepo;
 
   GetCurrentSession(this._authenticationRepo);
 
   @override
-  Future<Resource<UserSession?>> execute() => _authenticationRepo.getLastLoggedInUser().asResource;
+  Future<Resource<UserSessionModel?>> execute() => _authenticationRepo.getLastLoggedInUser().asResource;
 }

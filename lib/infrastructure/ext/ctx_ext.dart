@@ -7,6 +7,6 @@ import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/model/us
 extension CtxExt on BuildContext {
   ColorScheme get color => Theme.of(this).colorScheme;
   TextTheme get text => Theme.of(this).textTheme;
-  UserSession get userSession => read<SessionBloc>().state.session!;
+  UserSessionModel get userSession => read<SessionBloc>().state.session!;
   void logout() => read<SessionBloc>().add(LogoutEvent(userSession));
 }

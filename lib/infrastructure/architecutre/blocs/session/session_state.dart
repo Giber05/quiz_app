@@ -1,7 +1,7 @@
 part of 'session_bloc.dart';
 
 abstract class SessionState extends Equatable {
-  final UserSession? session;
+  final UserSessionModel? session;
   const SessionState(this.session);
 
   @override
