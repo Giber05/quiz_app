@@ -11,7 +11,7 @@ abstract class QuizRemoteDts {
 class QuizRemoteDtsImpl implements QuizRemoteDts {
   final APIClient _cbClient;
 
-  QuizRemoteDtsImpl(@Named('AuthClient') this._cbClient);
+  QuizRemoteDtsImpl(@Named('CBClient') this._cbClient);
 
   @override
   Future<APIResult<List<QuizModel>>> getQuizData() async {
