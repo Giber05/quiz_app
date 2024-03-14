@@ -12,96 +12,66 @@ class _QuizStepper extends StatefulWidget {
 }
 
 class _QuizStepperState extends State<_QuizStepper> {
-  late int _currentStep;
-  late List<String> _answers;
+  int _currentQuestionIndex = 0;
+  int _score = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _currentStep = 0;
-    _answers = List.filled(widget.quizData.length, '');
+  void _answerQuestion(String answer) {
+    if (widget.quizData[_currentQuestionIndex].typeQuestion == 'multichoice') {
+      setState(() {
+        if (answer == widget.quizData[_currentQuestionIndex].data.firstWhere((option) => option.value == '0').value) {
+          _score++;
+        }
+        _currentQuestionIndex++;
+      });
+    } else {
+      setState(() {
+        _currentQuestionIndex++;
+      });
+    }
   }
 
-  void _next() {
+  void _resetQuiz() {
     setState(() {
-      if (_currentStep < widget.quizData.length - 1) {
-        _currentStep++;
-      }
-    });
-  }
-
-  void _previous() {
-    setState(() {
-      if (_currentStep > 0) {
-        _currentStep--;
-      }
-    });
-  }
-
-  void _setAnswer(String answer) {
-    setState(() {
-      _answers[_currentStep] = answer;
+      _currentQuestionIndex = 0;
+      _score = 0;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Stepper(
-            type: StepperType.horizontal,
-            currentStep: _currentStep,
-            onStepContinue: _next,
-            onStepCancel: _previous,
-            steps: List.generate(
-              widget.quizData.length,
-              (index) => Step(
-                title: Text('Question ${index + 1}'),
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.quizData[index].question[0],
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    SizedBox(height: 10),
-                    Column(
-                      children: widget.quizData[index].data.map((option) {
-                        return RadioListTile(
-                          title: Text(option.text!),
-                          value: option.text,
-                          groupValue: _answers[index],
-                          onChanged: (value) {
-                            _setAnswer(value.toString());
-                          },
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
-              ),
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: FlutterStepIndicator(
+              height: 20,
+              durationScroller: const Duration(seconds: 1),
+              onChange: (int index) {},
+              page: _currentQuestionIndex,
+              list: widget.quizData,
             ),
           ),
-        ),
-        SizedBox(
-          height: 50,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: _currentStep == 0 ? null : _previous,
-                child: Text('Previous'),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: _currentStep == widget.quizData.length - 1 ? null : _next,
-                child: Text('Next'),
-              ),
-            ],
-          ),
-        ),
-      ],
+          _currentQuestionIndex < widget.quizData.length
+              ? _QuestionItem(
+                  question: widget.quizData[_currentQuestionIndex],
+                  answerQuestion: _answerQuestion,
+                  currentQuestionIndex: _currentQuestionIndex,
+                  totalQuestions: widget.quizData.length,
+                  onNext: () {
+                    setState(() {
+                      _currentQuestionIndex++;
+                    });
+                  },
+                )
+              : _ResultQuiz(
+                  score: _score,
+                  totalQuestions: widget.quizData.length,
+                  resetQuiz: _resetQuiz,
+                ),
+        ],
+      ),
     );
   }
 }
