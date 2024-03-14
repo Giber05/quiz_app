@@ -44,7 +44,7 @@ class _LoginForm extends StatelessWidget {
                 label: "Sign Up",
                 fillParent: true,
                 onPressed: () {
-                  context.router.push(const LoginRoute());
+                  context.router.push(const RegisterUserRoute());
                 },
               ),
             ],

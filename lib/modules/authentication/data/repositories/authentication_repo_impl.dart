@@ -26,10 +26,10 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
     _authenticationRemoteDTS.logout();
     return _authLocalDTS.clearSession();
   }
-  
+
   @override
-  Future<UserSession> registerUser({required String email, required String password})async  {
-    final registerResult = await _authenticationRemoteDTS.login(email: email, password: password);
+  Future<UserSession> registerUser({required String email, required String password}) async {
+    final registerResult = await _authenticationRemoteDTS.registerUser(email: email, password: password);
     await _authLocalDTS.putSession(registerResult.data);
     return registerResult.data;
   }

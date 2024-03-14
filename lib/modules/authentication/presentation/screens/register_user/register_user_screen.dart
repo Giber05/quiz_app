@@ -29,8 +29,7 @@ class RegisterUserScreen extends StatelessWidget {
             listener: (context, state) async {
               if (state is RegisterUserSuccess) {
                 context.read<SessionBloc>().add(SetCurrentUserEvent(state.session));
-                context.router.replace(
-                    const HomeRoute()); // Consider using replace to avoid back navigation to the RegisterUser screen
+                context.router.replaceAll([const HomeRoute()]);
               } else if (state is RegisterUserFailed) {
                 context.messenger.showErrorSnackbar(state.message);
               }
