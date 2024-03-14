@@ -15,7 +15,7 @@ class AuthLocalDTSImpl implements AuthenticationLocalDTS {
   final SessionLocalMapper _sessionLocalMapper = SessionLocalMapper();
 
   final _userSessionKey =
-      "uf.profielder.mobile.lib.modules.authentication.data.datasource.local.authentication_local_dts.dart";
+      "cb.quizapp.mobile.lib.modules.authentication.data.datasource.local.authentication_local_dts.dart";
 
   AuthLocalDTSImpl(this._secureStorage);
 

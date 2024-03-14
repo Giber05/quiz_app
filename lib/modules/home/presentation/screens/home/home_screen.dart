@@ -26,7 +26,7 @@ class _HomeScreenContent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text("Current user name : ${context.userSession.user.userName}"),
+          Text("Current user token : ${context.userSession}"),
           CBElevatedButton(
               label: "Logout",
               onPressed: () {
