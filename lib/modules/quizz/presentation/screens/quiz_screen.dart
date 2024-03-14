@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/ext/ctx_ext.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/ext/double_ext.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/widgets/buttons/elevated_button.dart';
+import 'package:com_bahaso_gilang_liberty/infrastructure/widgets/layouts/dialog/dialog_container.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,8 +33,41 @@ class QuizScreen extends StatelessWidget {
           actions: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: InkWell(
-                onTap: () {},
+              child: PopupMenuButton<String>(
+                onSelected: (String value) {
+                  if (value == "Profile") {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Current user token: ${context.userSession.token}'),
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                  } else if (value == "Logout") {
+                    ConfirmationDialog.launch(
+                      context,
+                      title: 'Are You Sure Want to Logout?',
+                      
+                      onConfirm: (VoidCallback closeDialog) {
+                        context.logout();
+                        closeDialog();
+                      },
+                    );
+                  }
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  const PopupMenuItem<String>(
+                    value: 'Profile',
+                    child: Text('Profile'),
+                  ),
+                  const PopupMenuItem<String>(
+                    value: 'Settings',
+                    child: Text('Settings'),
+                  ),
+                  const PopupMenuItem<String>(
+                    value: 'Logout',
+                    child: Text('Logout'),
+                  ),
+                ],
                 child: const Icon(
                   Icons.account_circle_rounded,
                   size: 40,

@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
             listener: (context, state) async {
               if (state is LoginSuccess) {
                 context.read<SessionBloc>().add(SetCurrentUserEvent(state.session));
-                context.router.push(const HomeRoute());
+                context.router.replace(const HomeRoute());
               }
             },
             child: Stack(
