@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:com_bahaso_gilang_liberty/modules/authentication/presentation/screens/login/bloc/login_bloc.dart';
-import 'package:com_bahaso_gilang_liberty/modules/authentication/presentation/screens/login/bloc/login_event.dart';
+import 'package:com_bahaso_gilang_liberty/modules/authentication/presentation/screens/register_user/bloc/register_user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:com_bahaso_gilang_liberty/infrastructure/architecutre/cubits/messenger/messenger_cubit.dart';
@@ -16,33 +15,36 @@ import 'package:com_bahaso_gilang_liberty/infrastructure/widgets/loading/overlay
 part 'widgets/form.dart';
 
 @RoutePage()
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterUserScreen extends StatelessWidget {
+  const RegisterUserScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<LoginBloc>(),
+      create: (context) => getIt<RegisterUserBloc>(),
       child: Scaffold(
         body: Center(
-          child: BlocListener<LoginBloc, LoginState>(
+          child: BlocListener<RegisterUserBloc, RegisterUserState>(
             listener: (context, state) async {
-              if (state is LoginSuccess) {
+              if (state is RegisterUserSuccess) {
                 context.read<SessionCubit>().setCurrentUser(state.session);
-                context.router.push(const HomeRoute());
+                context.router.replace(
+                    const HomeRoute()); // Consider using replace to avoid back navigation to the RegisterUser screen
+              } else if (state is RegisterUserFailed) {
+                context.messenger.showErrorSnackbar(state.message);
               }
             },
             child: Stack(
               children: [
-                const Align(alignment: Alignment.center, child: _LoginForm()),
-                BlocConsumer<LoginBloc, LoginState>(
+                const Align(alignment: Alignment.center, child: _RegisterUserForm()),
+                BlocConsumer<RegisterUserBloc, RegisterUserState>(
                   listener: (context, state) {
-                    if (state is LoginError) {
+                    if (state is RegisterUserFailed) {
                       context.messenger.showErrorSnackbar(state.message);
                     }
                   },
                   builder: (context, state) {
-                    if (state is! LoginLoading) {
+                    if (state is! RegisterUserLoading) {
                       return const SizedBox();
                     }
                     return const CBLoadingOverlay();

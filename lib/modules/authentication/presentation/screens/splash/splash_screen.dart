@@ -19,7 +19,7 @@ class SplashScreen extends StatelessWidget {
         body: BlocListener<SplashCubit, SplashState>(
           listener: (context, state) {
             if (state is SplashSuccess) {
-              context.read<SessionCubit>().setCurrenetUser(state.userSession);
+              context.read<SessionCubit>().setCurrentUser(state.userSession);
               final route = state.userSession != null ? const HomeRoute() : const LoginRoute();
               context.router.replace(route);
             }

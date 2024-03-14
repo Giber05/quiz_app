@@ -4,20 +4,20 @@ import 'package:com_bahaso_gilang_liberty/infrastructure/types/resource.dart';
 import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/repositories/authentication_repo.dart';
 import 'package:com_bahaso_gilang_liberty/modules/authentication/domain/model/user_session.dart';
 
-class LoginParams {
+class RegisterParams {
   final String email;
   final String password;
 
-  LoginParams({required this.email, required this.password});
+  RegisterParams({required this.email, required this.password});
 }
 
 @injectable
-class Login extends Usecase<LoginParams, UserSession> {
+class RegisterUser extends Usecase<RegisterParams, UserSession> {
   final AuthenticationRepo _authenticationRepo;
 
-  Login(this._authenticationRepo);
+  RegisterUser(this._authenticationRepo);
 
   @override
-  Future<Resource<UserSession>> execute(LoginParams params) =>
-      _authenticationRepo.login(email: params.email, password: params.password).asResource;
+  Future<Resource<UserSession>> execute(RegisterParams params) =>
+      _authenticationRepo.registerUser(email: params.email, password: params.password).asResource;
 }

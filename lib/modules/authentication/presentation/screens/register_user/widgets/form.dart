@@ -1,11 +1,11 @@
-part of '../login_screen.dart';
+part of '../register_user_screen.dart';
 
-class _LoginForm extends StatelessWidget {
-  const _LoginForm({super.key});
+class _RegisterUserForm extends StatelessWidget {
+  const _RegisterUserForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<LoginBloc>();
+    final bloc = context.read<RegisterUserBloc>();
 
     return Form(
       key: bloc.formKey,
@@ -18,7 +18,7 @@ class _LoginForm extends StatelessWidget {
               const _UFIcon(),
               48.verticalSpace,
               Text(
-                "Welcome Back",
+                "You Can Sign Up by Filling This Form",
                 style: context.text.titleLarge?.copyWith(color: context.color.primary, fontSize: 24),
               ),
               34.verticalSpace,
@@ -33,20 +33,12 @@ class _LoginForm extends StatelessWidget {
               ),
               33.verticalSpace,
               CBElevatedButton(
-                label: "Sign In",
+                label: "Register",
                 fillParent: true,
                 onPressed: () {
-                  context.read<LoginBloc>().add(LoginRequested(email: bloc.email.text, password: bloc.password.text));
+                  context.read<RegisterUserBloc>().add(RegisterUserRequested(email: bloc.email.text, password: bloc.password.text));
                 },
-              ),
-              24.verticalSpace,
-              CBElevatedButton(
-                label: "Sign Up",
-                fillParent: true,
-                onPressed: () {
-                  context.router.push(const LoginRoute());
-                },
-              ),
+              )
             ],
           ),
         ),

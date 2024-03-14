@@ -24,17 +24,21 @@ import '../../modules/authentication/domain/usecases/get_current_session.dart'
     as _i13;
 import '../../modules/authentication/domain/usecases/login.dart' as _i14;
 import '../../modules/authentication/domain/usecases/logout.dart' as _i16;
-import '../../modules/authentication/presentation/screens/login/cubit/login_cubit.dart'
+import '../../modules/authentication/domain/usecases/register_user.dart'
+    as _i17;
+import '../../modules/authentication/presentation/screens/login/bloc/login_bloc.dart'
     as _i15;
-import '../../modules/authentication/presentation/screens/splash/cubit/splash_cubit.dart'
+import '../../modules/authentication/presentation/screens/register_user/bloc/register_user_bloc.dart'
     as _i18;
+import '../../modules/authentication/presentation/screens/splash/cubit/splash_cubit.dart'
+    as _i20;
 import '../architecutre/cubits/messenger/messenger_cubit.dart' as _i8;
-import '../architecutre/cubits/session/session_cubit.dart' as _i17;
+import '../architecutre/cubits/session/session_cubit.dart' as _i19;
 import '../client/api_client.dart' as _i3;
 import '../client/auth_client_impl.dart' as _i5;
 import '../client/cb_client_impl.dart' as _i4;
 import '../local_storage/secure_storage/secure_storage.dart' as _i9;
-import 'modules/core_module.dart' as _i19;
+import 'modules/core_module.dart' as _i21;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -73,14 +77,18 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i13.GetCurrentSession>(
         () => _i13.GetCurrentSession(gh<_i11.AuthenticationRepo>()));
     gh.factory<_i14.Login>(() => _i14.Login(gh<_i11.AuthenticationRepo>()));
-    gh.factory<_i15.LoginCubit>(() => _i15.LoginCubit(gh<_i14.Login>()));
+    gh.factory<_i15.LoginBloc>(() => _i15.LoginBloc(gh<_i14.Login>()));
     gh.factory<_i16.Logout>(() => _i16.Logout(gh<_i11.AuthenticationRepo>()));
-    gh.lazySingleton<_i17.SessionCubit>(
-        () => _i17.SessionCubit(gh<_i16.Logout>()));
-    gh.factory<_i18.SplashCubit>(
-        () => _i18.SplashCubit(gh<_i13.GetCurrentSession>()));
+    gh.factory<_i17.RegisterUser>(
+        () => _i17.RegisterUser(gh<_i11.AuthenticationRepo>()));
+    gh.factory<_i18.RegisterUserBloc>(
+        () => _i18.RegisterUserBloc(gh<_i17.RegisterUser>()));
+    gh.lazySingleton<_i19.SessionCubit>(
+        () => _i19.SessionCubit(gh<_i16.Logout>()));
+    gh.factory<_i20.SplashCubit>(
+        () => _i20.SplashCubit(gh<_i13.GetCurrentSession>()));
     return this;
   }
 }
 
-class _$CoreModules extends _i19.CoreModules {}
+class _$CoreModules extends _i21.CoreModules {}

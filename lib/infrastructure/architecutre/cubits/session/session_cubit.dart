@@ -11,7 +11,7 @@ class SessionCubit extends Cubit<SessionState> {
   final Logout _logout;
   SessionCubit(this._logout) : super(const SessionIdle(null));
 
-  void setCurrenetUser(UserSession? user) {
+  void setCurrentUser(UserSession? user) {
     emit(SessionIdle(user));
   }
 
